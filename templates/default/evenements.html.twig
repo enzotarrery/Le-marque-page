@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - tous les évènements{% endblock %}
+
+{% block body %}
+    <!-- Les évènements -->
+    <section class="box special">
+        <header class="major">
+            <h2>Tous les évènements</h2>
+        </header>
+    </section>
+
+    {% if evenements is not empty %}
+        {% for evenement in evenements %}
+            <section class="box special">
+                <h3>{{ evenement.nom }}</h3>
+                <p id="description">{{ evenement.description }}</p>
+                <p id="date"><strong>Le {{ evenement.date|format_datetime('full', 'none', locale='fr') }}.</strong></p>
+            </section>
+        {% endfor %}
+    {% else %}
+        <section class="box special">
+            <p>Aucun évènement à venir.</p>
+        </section>
+    {% endif %}
+{% endblock %}

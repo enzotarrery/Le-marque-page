@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} - Image upload {% endblock %}
+
+{% block banner %}
+<!-- Banner -->
+<section id="banner">
+    <h2>Le marque page</h2>
+    <p>L'Administration est un plat réservé ;)</p>
+</section>
+{% endblock %}
+
+{% block body %}
+<section class="box">
+    <h1 class="h3 mb-3 font-weight-normal">Chargement d'image</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" value="Upload">
+    {{ form_end(form) }}
+</section>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+    <ul>
+        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+        <li>
+            <a href="#" class="icon solid fa-angle-down">Les types de produits</a>
+            <ul>
+                <li><a href="{{ path('produits', {type: 'entree'}) }}">Les entrées</a></li>
+                <li><a href="{{ path('produits', {type: 'plat'}) }}">Les plats</a></li>
+                <li><a href="{{ path('produits', {type: 'dessert'}) }}">Les desserts</a></li>
+                <li><a href="{{ path('produits', {type: 'boisson'}) }}">Les boissons</a></li>
+            </ul>
+        </li>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('admin') }}">Administration</a></li>
+        {% endif %}
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li><a href="{{ path('app_login') }}" class="button">Se connecter</a></li>
+            <li><a href="{{ path('app_register') }}" class="button">Créer un compte</a></li>
+        {% else %}
+            <li><a href="{{ path('panier') }}">Mon panier ({{ app.user.commandes|length }})</a></li>
+            <li><a href="{{ path('app_logout') }}" class="button">Se déconnecter</a></li>
+        {% endif %}
+    </ul>
+{% endblock %}
+
+{% block body %}
+    {% if produits is not empty %}
+    <!-- les produits en fonction du type -->
+    <div class="row">
+        {% for produit in produits %}
+        <div class="col-6 col-12-narrower">
+            <section class="box special">
+                <span class="image featured">
+                    <img src="{{ asset('images/' ~ produit.image.nom) }}" alt="{{ produit.nom }}">
+                </span>
+                <h3>{{ produit.nom }}</h3>
+                <p id="description">{{ produit.description }}</p>
+                <p id="prix">{{ produit.prix }}€</p>
+                <ul class="actions special">
+                    <a href="{{ path('produit', {id: produit.id}) }}" class="button alt">En savoir plus</a>
+                </ul>
+            </section>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <section class="box special">
+        <p>Lien incorrecte.</p>
+    </section>
+    {% endif %}
+{% endblock %}

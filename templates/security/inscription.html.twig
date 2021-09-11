@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} - Inscription {% endblock %}
+
+{% block banner %}
+    <!-- Banner -->
+    <section id="banner">
+        <h2>Le marque page</h2>
+        <p>Inscrivez-vous pour plus de plaisir !</p>
+    </section>
+{% endblock %}
+
+{% block body %}
+<section class="box">
+    <h1 class="h3 mb-3 font-weight-normal">Inscrivez-vous</h1>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Inscription">
+        {{ form_end(form) }}
+</section>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - accueil{% endblock %}
+
+{% block body %}
+        <!-- Le menu du jour -->
+        <section class="box special">
+            <header class="major">
+                <h2>Le menu du jour</h2>
+            </header>
+            {% if menu is not empty %}
+            <p id="composition">{{ menu.composition[1].nom }} + {{ menu.composition[2].nom }} + {{ menu.composition[0].nom }}</p>
+            <ul class="actions special">
+                <li><a href="{{ path('menu', {date: menu.date.format('Y-m-d')}) }}" class="button alt">En savoir plus</a></li>
+            </ul>
+            {% else %}
+            <p>Aucun menu pour aujourd'hui.</p>
+            {% endif %}
+        </section>
+
+        <!-- Les promotions -->
+        <section class="box special">
+            <header class="major">
+                <h2>Les promotions récentes</h2>
+            </header>
+        </section>
+
+        {% if promotions is not empty %}
+            {% for promotion in promotions %}
+            <section class="box special">
+                <h3>{{ promotion.nom }}</h3>
+                <p id="description">{{ promotion.description }}</p>
+                <p id="dates"><strong>Du {{ promotion.dateDebut|format_datetime('full', 'none', locale='fr') }} au {{ promotion.dateFin|format_datetime('full', 'none', locale='fr') }}.</strong></p>
+            </section>
+            {% endfor %}
+        {% else %}
+        <section class="box special">
+            <p>Aucune promotion en cours ou à venir.</p>
+        </section>
+        {% endif %}
+
+        <!-- Les évènements -->
+        <section class="box special">
+            <header class="major">
+                <h2>Les évènements à venir</h2>
+            </header>
+        </section>
+
+        {% if evenements is not empty %}
+            {% for evenement in evenements %}
+            <section class="box special">
+                <h3>{{ evenement.nom }}</h3>
+                <p id="description">{{ evenement.description }}</p>
+                <p id="date"><strong>Le {{ evenement.date|format_datetime('full', 'none', locale='fr') }}.</strong></p>
+            </section>
+            {% endfor %}
+        {% else %}
+        <section class="box special">
+            <p>Aucun évènement à venir.</p>
+        </section>
+        {% endif %}
+{% endblock %}

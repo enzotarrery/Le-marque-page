@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} - {{ produit.nom }} {% endblock %}
+
+{% block body %}
+    <!-- les produits en fonction du type -->
+    {% if produit is not empty %}
+    <section class="box">
+        <!-- info produit -->
+        <h3>{{ produit.nom }}</h3>
+        <p>{{ produit.description }}</p>
+        <p id="prix">{{ produit.prix }}€</p>
+
+        <!-- formulaire envoi -->
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" value="Ajouter au panier">
+            {{ form_end(form) }}
+        {% endif %}
+    </section>
+    {% else %}
+    <section class="box special">
+        <p>Référence incorrecte.</p>
+    </section>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <title>{% block title %}Le marque page{% endblock %}</title>
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+        {% endblock %}
+    </head>
+
+    <body class="landing is-preload">
+
+        <div id="page-wrapper">
+
+            <!-- Header -->
+            <header id="header" class="alt">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <h1>Bonjour, {{ app.user.prenom }} {{ app.user.nom }}.</h1>
+                {% endif %}
+                <nav id="nav">
+                    {% block navigation %}
+                    <ul>
+                        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                        <li>
+                            <a href="#" class="icon solid fa-angle-down">Le site</a>
+                            <ul>
+                                <li><a href="{{ path('produits') }}">La carte</a></li>
+                                <li><a href="{{ path('promotions') }}">Les promotions</a></li>
+                                <li><a href="{{ path('evenements') }}">Les évènements</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li><a href="{{ path('admin') }}">Administration</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <li><a href="{{ path('app_login') }}" class="button">Se connecter</a></li>
+                            <li><a href="{{ path('app_register') }}" class="button">Créer un compte</a></li>
+                        {% else %}
+                            <li><a href="{{ path('panier') }}">Mon panier ({{ app.user.commandes|length }})</a></li>
+                            <li><a href="{{ path('app_logout') }}" class="button">Se déconnecter</a></li>
+                        {% endif %}
+                    </ul>
+                    {% endblock %}
+                </nav>
+            </header>
+
+            {% block banner %}
+                <!-- Banner -->
+                <section id="banner">
+                    <h2>Le marque page</h2>
+                    <p>Bienvenue à la maison :)</p>
+                </section>
+            {% endblock %}
+
+            <!-- Main -->
+            <section id="main" class="container">
+                {% block body %}{% endblock %}
+            </section>
+        </div>
+
+        {% block javascripts %}
+            <script src="{{ asset('js/jquery.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.dropotron.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.scrollex.min.js') }}"></script>
+            <script src="{{ asset('js/browser.min.js') }}"></script>
+            <script src="{{ asset('js/breakpoints.min.js') }}"></script>
+            <script src="{{ asset('js/util.js') }}"></script>
+            <script src="{{ asset('js/main.js') }}"></script>
+        {% endblock %}
+    </body>
+
+</html>

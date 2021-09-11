@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - toutes les promotions{% endblock %}
+
+{% block body %}
+    <!-- Les promotions -->
+    <section class="box special">
+        <header class="major">
+            <h2>Toutes les promotions</h2>
+        </header>
+    </section>
+
+    {% if promotions is not empty %}
+        {% for promotion in promotions %}
+            <section class="box special">
+                <h3>{{ promotion.nom }}</h3>
+                <p id="description">{{ promotion.description }}</p>
+                <p id="dates"><strong>Du {{ promotion.dateDebut|format_datetime('full', 'none', locale='fr') }} au {{ promotion.dateFin|format_datetime('full', 'none', locale='fr') }}.</strong></p>
+            </section>
+        {% endfor %}
+    {% else %}
+        <section class="box special">
+            <p>Aucune promotion en cours ou à venir.</p>
+        </section>
+    {% endif %}
+{% endblock %}

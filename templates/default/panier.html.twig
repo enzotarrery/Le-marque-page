@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} - Votre panier ({{ app.user.commandes|length }}) {% endblock %}
+
+{% block banner %}
+<!-- Banner -->
+<section id="banner">
+    <h2>Le marque page</h2>
+    <p>Vos très bon choix !</p>
+</section>
+{% endblock %}
+
+{% block body %}
+    {% if app.user.commandes is not empty %}
+    <!-- les produits du panier du client -->
+    {% for commande in app.user.commandes %}
+    <section class="box">
+        <h2>{{ commande.produit.nom }}</h2>
+        <p>Quantité : {{ commande.quantite }}</p>
+        <p id="prix">Prix total : {{ commande.produit.prix * commande.quantite }}€</p>
+        {{ form_start(forms[loop.index0]) }}
+        {{ form_widget(forms[loop.index0]) }}
+        {{ form_end(forms[loop.index0]) }}
+    </section>
+    {% endfor %}
+    {% else %}
+    <section class="box special">
+        <p>Votre panier est vide.</p>
+    </section>
+    {% endif %}
+{% endblock %}
